@@ -26,8 +26,9 @@ public class AnalizadorRecursivo{
             case 'i': case '(': 
                 avance();
                 elo();
-                return;
+                break;
             default: rechace();
+            break;
         }
     }
 
@@ -37,32 +38,271 @@ public class AnalizadorRecursivo{
                 avance();
                 el2();
                 elo_l();
-                return;
+                break;
             default: rechace();
+            break;
         }
     }
 
     static void elo_l(){
-
+        switch(INP){
+            case '|':
+              avance();
+              avance();
+              el2();
+              elo_l();
+              break;
+            case ')': case '¬':
+                avance();
+                break;
+            default: rechace();
+            break;
+        }
     }
 
     static void el2(){
-
+        switch(INP){
+            case 'i': case '(':
+                avance();
+                e();
+                er_l();
+                break;
+            default: rechace();
+            break;
+        }
     }
 
+    static void el2_l(){
+        switch(INP){
+            case '&':
+                avance();
+                avance();
+                er();
+                el2_l();
+                break;
+            case '|': case '¬':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
 
+    static void er(){
+        switch(INP){
+            case 'i': case '(':
+                avance();
+                er();
+                el2_l();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void er_l(){
+        switch(INP){
+            case '<': case '>': case '=': case '!':
+                avance();
+                or();
+                e();
+                break;
+            case '¬': case ')': case '&': case '|':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void or(){
+        switch(INP){
+            case '<':
+                avance();
+                me();
+                break;
+            case '>':
+                avance();
+                ma();
+                break;
+            case '=':
+                avance();
+                ig();
+                break;
+            case '!':
+                avance();
+                di();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void me(){
+        switch(INP){
+            case '=':
+                avance();
+                break;
+            case 'i': case '(':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void ma(){
+        switch(INP){
+            case '=':
+                avance();
+                break;
+            case 'i': case '(':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void ig(){
+        switch(INP){
+            case '=':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+    
+    static void di(){
+        switch(INP){
+            case '=':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void e(){
+        switch(INP){
+            case 'i':case '(':
+                avance();
+                t();
+                e_l();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void e_l(){
+        switch(INP){
+            case '+':
+                avance();
+                t();
+                e_l();
+                break;
+            case '-':
+                avance();
+                t();
+                e_l();
+                break;
+            case '¬': case ')': case '&': case '|':case '<':case '>':case '=':case '!':
+                avance();
+             break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void t(){
+        switch(INP){
+            case 'i':case '(':
+                avance();
+                p();
+                t_l();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void t_l(){
+        switch(INP){
+            case '*':
+                avance();
+                p();
+                t_l();
+                break;
+            case '/':
+                avance();
+                p();
+                t_l();
+                break;
+            case '¬': case ')': case '&': case '|':case '<':case '>':case '=':case '!':case '+':case '-':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void p(){
+        switch(INP){
+            case 'i':case '(':
+                avance();
+                f();
+                p_l();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    static void p_l(){
+        switch(INP){
+            case '^':
+                avance();
+                f();
+                p_l();
+                break;
+            case '¬': case ')': case '&': case '|':case '<':case '>':case '=':case '!':case '+':case '-':case '*':case '/':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
+
+    
+    static void f(){
+        switch(INP){
+            case '(':
+                avance();
+                elo();
+                if(INP!=')') rechace();
+                break;
+            case 'i':
+                avance();
+                break;
+            default:rechace();
+            break;
+        }
+    }
 
     static void avance(){
-        index++;
+        index+=1;
         INP = lexico.darElemento(index).darTipo();
     }
 
     static void rechace(){
-
+        System.out.println("La cadena ingresada no es valida:");
+        System.out.println("Error en:"+INP);
     }
 
     static void acepte(){
-
+        System.out.println("Cadena aceptada")
     }
 
     public static void analisisLexico(){
