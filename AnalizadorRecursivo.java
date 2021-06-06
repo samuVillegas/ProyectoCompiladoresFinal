@@ -24,7 +24,6 @@ public class AnalizadorRecursivo{
     static void procesoS(){
         switch(INP){
             case 'i': case '(': 
-                avance();
                 elo();
                 break;
             default: rechace();
@@ -35,7 +34,6 @@ public class AnalizadorRecursivo{
     static void elo(){
         switch(INP){
             case 'i': case '(': 
-                avance();
                 el2();
                 elo_l();
                 break;
@@ -48,12 +46,10 @@ public class AnalizadorRecursivo{
         switch(INP){
             case '|':
               avance();
-              avance();
               el2();
               elo_l();
               break;
             case ')': case '¬':
-                avance();
                 break;
             default: rechace();
             break;
@@ -63,9 +59,8 @@ public class AnalizadorRecursivo{
     static void el2(){
         switch(INP){
             case 'i': case '(':
-                avance();
-                e();
-                er_l();
+                er();
+                el2_l();
                 break;
             default: rechace();
             break;
@@ -76,12 +71,10 @@ public class AnalizadorRecursivo{
         switch(INP){
             case '&':
                 avance();
-                avance();
                 er();
                 el2_l();
                 break;
-            case '|': case '¬':
-                avance();
+            case '|': case '¬': case ')':
                 break;
             default:rechace();
             break;
@@ -91,9 +84,8 @@ public class AnalizadorRecursivo{
     static void er(){
         switch(INP){
             case 'i': case '(':
-                avance();
-                er();
-                el2_l();
+                e();
+                er_l();
                 break;
             default:rechace();
             break;
@@ -103,12 +95,10 @@ public class AnalizadorRecursivo{
     static void er_l(){
         switch(INP){
             case '<': case '>': case '=': case '!':
-                avance();
                 or();
                 e();
                 break;
             case '¬': case ')': case '&': case '|':
-                avance();
                 break;
             default:rechace();
             break;
@@ -144,7 +134,6 @@ public class AnalizadorRecursivo{
                 avance();
                 break;
             case 'i': case '(':
-                avance();
                 break;
             default:rechace();
             break;
@@ -157,7 +146,6 @@ public class AnalizadorRecursivo{
                 avance();
                 break;
             case 'i': case '(':
-                avance();
                 break;
             default:rechace();
             break;
@@ -187,7 +175,6 @@ public class AnalizadorRecursivo{
     static void e(){
         switch(INP){
             case 'i':case '(':
-                avance();
                 t();
                 e_l();
                 break;
@@ -209,8 +196,7 @@ public class AnalizadorRecursivo{
                 e_l();
                 break;
             case '¬': case ')': case '&': case '|':case '<':case '>':case '=':case '!':
-                avance();
-             break;
+                break;
             default:rechace();
             break;
         }
@@ -219,7 +205,6 @@ public class AnalizadorRecursivo{
     static void t(){
         switch(INP){
             case 'i':case '(':
-                avance();
                 p();
                 t_l();
                 break;
@@ -241,7 +226,6 @@ public class AnalizadorRecursivo{
                 t_l();
                 break;
             case '¬': case ')': case '&': case '|':case '<':case '>':case '=':case '!':case '+':case '-':
-                avance();
                 break;
             default:rechace();
             break;
@@ -251,7 +235,6 @@ public class AnalizadorRecursivo{
     static void p(){
         switch(INP){
             case 'i':case '(':
-                avance();
                 f();
                 p_l();
                 break;
@@ -268,7 +251,6 @@ public class AnalizadorRecursivo{
                 p_l();
                 break;
             case '¬': case ')': case '&': case '|':case '<':case '>':case '=':case '!':case '+':case '-':case '*':case '/':
-                avance();
                 break;
             default:rechace();
             break;
@@ -281,7 +263,8 @@ public class AnalizadorRecursivo{
             case '(':
                 avance();
                 elo();
-                if(INP!=')') rechace();
+                avance();
+                if(INP==')') rechace();
                 break;
             case 'i':
                 avance();
@@ -302,7 +285,7 @@ public class AnalizadorRecursivo{
     }
 
     static void acepte(){
-        System.out.println("Cadena aceptada")
+        System.out.println("Cadena aceptada");
     }
 
     public static void analisisLexico(){
