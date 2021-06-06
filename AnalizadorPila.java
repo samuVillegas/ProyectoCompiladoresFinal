@@ -293,16 +293,12 @@ public class AnalizadorPila{
             }
         
             nt=analizador.getnode(analizador.ultimo());
-            System.out.println(index);
-            System.out.println("***********************");
-            analizador.mostrarCadenaPila();
         }while(!nt.getNombre().equalsIgnoreCase("v"));
 
         if (nt.getNombre().equalsIgnoreCase("v"))
             System.out.println("Se acepta la secuencia");
         else
             System.out.println("Se rechaza la secuencia");
-
 
     }
 
