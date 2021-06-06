@@ -16,7 +16,8 @@ public class AnalizadorRecursivo{
         cadena = cadena+="¬";
         analisisLexico();
         INP = lexico.darElemento(index).darTipo();
-        procesoS();
+        //procesoS();
+        elo();
         if(INP!='¬') rechace();
         else acepte();
     }
@@ -263,8 +264,8 @@ public class AnalizadorRecursivo{
             case '(':
                 avance();
                 elo();
+                if(INP!=')'){rechace();} 
                 avance();
-                if(INP==')') rechace();
                 break;
             case 'i':
                 avance();
@@ -282,6 +283,7 @@ public class AnalizadorRecursivo{
     static void rechace(){
         System.out.println("La cadena ingresada no es valida:");
         System.out.println("Error en:"+INP);
+        System.exit(0);
     }
 
     static void acepte(){
